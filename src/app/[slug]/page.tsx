@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getPageConfig, getMarkdownContent, getBibtexContent } from '@/lib/content';
+import { getPageConfig, getMarkdownContent, getBibtexContent, getArticleEntries } from '@/lib/content';
 import { getConfig } from '@/lib/config';
 import { parseBibTeX } from '@/lib/bibtexParser';
 import DynamicPageClient, { type DynamicPageLocaleData } from '@/components/pages/DynamicPageClient';
@@ -8,6 +8,7 @@ import {
   PublicationPageConfig,
   TextPageConfig,
   CardPageConfig,
+  ArticleListPageConfig,
 } from '@/types/page';
 
 import { Metadata } from 'next';
@@ -44,6 +45,15 @@ function loadDynamicPageData(slug: string, locale?: string): DynamicPageLocaleDa
     return {
       type: 'card',
       config: pageConfig as CardPageConfig,
+    };
+  }
+
+  if (pageConfig.type === 'articles') {
+    const articleConfig = pageConfig as ArticleListPageConfig;
+    return {
+      type: 'articles',
+      config: articleConfig,
+      articles: getArticleEntries(articleConfig.source, locale),
     };
   }
 

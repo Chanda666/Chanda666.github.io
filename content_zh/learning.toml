@@ -1,24 +1,4 @@
-type = "card"
+type = "articles"
 title = "学习"
 description = "最近读的论文、课程笔记、PDF 和学习材料。"
-
-[[items]]
-title = "最近阅读的论文"
-subtitle = "论文链接"
-date = "2026"
-content = "这里放最近读过的论文条目、简短笔记和原文链接。示例：[论文链接](https://example.com)。"
-tags = ["论文", "阅读", "链接"]
-
-[[items]]
-title = "课程笔记"
-subtitle = "PDF 笔记"
-date = "2026"
-content = "这里放课程笔记、讲义总结或自学资料。可把 PDF 放到 `public/files/` 后再链接。示例：[下载 PDF](/files/course-notes.pdf)。"
-tags = ["PDF", "课程", "笔记"]
-
-[[items]]
-title = "学习记录"
-subtitle = "学习归档"
-date = "2026"
-content = "这里放简短的学习记录、批注链接、实现笔记或读书总结。"
-tags = ["记录", "归档"]
+source = "learning"

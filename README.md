@@ -13,11 +13,34 @@ Edit content in:
 
 - `content/config.toml`: site profile and navigation
 - `content/bio.md`: homepage introduction
-- `content/learning.toml`: learning entries
-- `content/thoughts.toml`: diary-style thought entries
+- `content/learning/*.md`: learning articles
+- `content/thoughts/*.md`: diary-style thought articles
 - `content_zh/`: Chinese versions
 - `public/files/`: PDFs and downloadable files
 - `public/images/`: images
+
+## Add a Learning or Thoughts article
+
+Create a new `.md` file under `content/learning/` or `content/thoughts/`.
+
+Example:
+
+```md
+---
+title = "My Paper Note"
+date = "2026-05-25"
+summary = "One sentence summary."
+tags = ["paper", "reading"]
+link = "https://example.com"
+image = "/images/example.jpg"
+---
+
+Write the article body here with Markdown.
+
+[PDF notes](/files/course-notes.pdf)
+```
+
+Only `title` is required. `date`, `summary`, `tags`, `link`, and `image` are optional.
 
 After editing:
 

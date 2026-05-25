@@ -1,24 +1,4 @@
-type = "card"
+type = "articles"
 title = "想法"
 description = "带链接、图片、文字和表情的日记式条目。"
-
-[[items]]
-title = "日常记录"
-subtitle = "日记"
-date = "2026-05-25"
-content = "这里放日记条目，可以混合文字、表情、外链和图片。示例：[相关链接](https://example.com) ☕"
-tags = ["日记", "链接", "表情"]
-
-[[items]]
-title = "图片和链接"
-subtitle = "想法归档"
-date = "2026"
-content = "这里放带图片和简短说明的条目。图片可放在 `public/images/`，然后用 Markdown 引用。"
-tags = ["图片", "笔记"]
-
-[[items]]
-title = "较长反思"
-subtitle = "随笔"
-date = "2026"
-content = "这里放周记、阅读反思，或适合公开浏览的短篇日记。"
-tags = ["随笔", "反思"]
+source = "thoughts"

@@ -1,24 +1,4 @@
-type = "card"
+type = "articles"
 title = "Learning"
 description = "Recently read papers, course notes, PDFs, and study materials."
-
-[[items]]
-title = "Recent Paper Reading"
-subtitle = "Paper link"
-date = "2026"
-content = "A placeholder entry for a recently read paper. Add the paper title, a short note, and the external link here. Example: [Paper link](https://example.com)."
-tags = ["Paper", "Reading", "Link"]
-
-[[items]]
-title = "Course Notes"
-subtitle = "PDF notes"
-date = "2026"
-content = "A placeholder entry for course notes, lecture summaries, or self-study materials. Link a PDF from `public/files/` when ready. Example: [Download PDF](/files/course-notes.pdf)."
-tags = ["PDF", "Course", "Notes"]
-
-[[items]]
-title = "Study Log"
-subtitle = "Learning archive"
-date = "2026"
-content = "A placeholder for shorter learning records, annotated links, implementation notes, or reading summaries."
-tags = ["Notes", "Archive"]
+source = "learning"

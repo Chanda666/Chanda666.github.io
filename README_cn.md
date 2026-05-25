@@ -13,11 +13,34 @@ npm run dev
 
 - `content/config.toml`：站点资料和导航
 - `content/bio.md`：主页简介
-- `content/learning.toml`：学习记录
-- `content/thoughts.toml`：日记式想法
+- `content/learning/*.md`：学习文章
+- `content/thoughts/*.md`：日记式想法文章
 - `content_zh/`：中文版本
 - `public/files/`：PDF 和可下载文件
 - `public/images/`：图片
+
+## 新增 Learning 或 Thoughts 文章
+
+在 `content/learning/` 或 `content/thoughts/` 下面新建 `.md` 文件。
+
+示例：
+
+```md
+---
+title = "我的论文笔记"
+date = "2026-05-25"
+summary = "一句话摘要。"
+tags = ["论文", "阅读"]
+link = "https://example.com"
+image = "/images/example.jpg"
+---
+
+这里用 Markdown 写正文。
+
+[PDF 笔记](/files/course-notes.pdf)
+```
+
+只有 `title` 必填。`date`、`summary`、`tags`、`link`、`image` 都是可选项。
 
 修改后发布：
 
