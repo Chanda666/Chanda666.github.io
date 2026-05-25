@@ -1,0 +1,24 @@
+type = "card"
+title = "Thoughts"
+description = "Diary-style entries with links, images, text, and small moments."
+
+[[items]]
+title = "Daily Note"
+subtitle = "Diary"
+date = "2026-05-25"
+content = "A placeholder diary block. It can include text, emoji, external links, and image references. Example: [related link](https://example.com) ☕"
+tags = ["Diary", "Link", "Emoji"]
+
+[[items]]
+title = "Image and Link Entry"
+subtitle = "Thoughts archive"
+date = "2026"
+content = "A placeholder for an entry with an image and a short caption. Add images under `public/images/` and reference them here with Markdown."
+tags = ["Image", "Note"]
+
+[[items]]
+title = "Longer Reflection"
+subtitle = "Journal"
+date = "2026"
+content = "A placeholder for weekly reflections, reading reactions, or public diary notes that should stay easy to browse."
+tags = ["Journal", "Reflection"]

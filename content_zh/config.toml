@@ -1,18 +1,17 @@
 [site]
-title = "刘嘉乐"
-description = "某某大学博士生个人主页。"
-last_updated = "2025年11月18日"
+title = "Chanda666"
+description = "Chanda666 的个人主页。"
+last_updated = "2026年5月25日"
 
 [author]
-name = "刘嘉乐"
-title = "博士生"
-institution = "某某大学"
+name = "Chanda666"
+title = "个人主页"
+institution = "学习、写作与研究笔记"
 
 [social]
-location = "城市，国家"
+location = ""
 location_details = [
-  "理科楼 123 室，",
-  "大学路，城市，国家"
+  ""
 ]
 
 [[navigation]]
@@ -28,10 +27,10 @@ target = "publications"
 href = "/publications"
 
 [[navigation]]
-title = "教学"
+title = "学习"
 type = "page"
-target = "teaching"
-href = "/teaching"
+target = "learning"
+href = "/learning"
 
 [[navigation]]
 title = "奖项"
@@ -40,10 +39,10 @@ target = "awards"
 href = "/awards"
 
 [[navigation]]
-title = "服务"
+title = "想法"
 type = "page"
-target = "services"
-href = "/services"
+target = "thoughts"
+href = "/thoughts"
 
 [[navigation]]
 title = "简历"

@@ -1,5 +1,5 @@
-I am a PhD student at the School of Science, University of Example, advised by [Prof. Advisor One](https://example.com) and [Dr. Advisor Two](https://example.com).
+This is a personal homepage for notes, papers, learning records, and thoughts.
 
-Prior to this, I obtained a BSc degree with First Class Honours in Natural Science from the University of Example.
+The content here is intentionally placeholder-friendly: replace this paragraph with your own introduction, current focus, research interests, or project summary.
 
-My current research focuses on investigating the mathematical principles of natural philosophy.
+Use **Learning** for recently read papers, course notes, and PDF materials. Use **Thoughts** for diary-style posts with links, images, text, and small records.
