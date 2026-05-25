@@ -14,14 +14,12 @@ title = "About"
 
 [[sections]]
 id = "featured_publications"
-type = "publications"
+type = "markdown"
 title = "Selected Publications"
-filter = "selected"
-limit = 5
+source = "selected_publications.md"
 
 [[sections]]
 id = "news"
 type = "list"
 title = "News"
 source = "news.toml"
-

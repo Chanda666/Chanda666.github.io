@@ -1,4 +1,4 @@
-type = "publication"
+type = "text"
 title = "论文"
-description = "暂无"
-source = "publications.bib"
+description = "待更新"
+source = "publications.md"

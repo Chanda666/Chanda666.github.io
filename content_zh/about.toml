@@ -14,10 +14,9 @@ title = "关于我"
 
 [[sections]]
 id = "featured_publications"
-type = "publications"
+type = "markdown"
 title = "精选论文"
-filter = "selected"
-limit = 5
+source = "selected_publications.md"
 
 [[sections]]
 id = "news"
