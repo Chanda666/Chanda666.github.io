@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import {
@@ -14,6 +14,7 @@ import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 import { Github, Linkedin, Pin } from 'lucide-react';
 import type { SiteConfig } from '@/lib/config';
 import { useMessages } from '@/lib/i18n/useMessages';
+import { getLikeCount, incrementLike, decrementLike } from '@/lib/counter';
 
 // Custom ORCID icon component
 const OrcidIcon = ({ className }: { className?: string }) => (
@@ -39,13 +40,14 @@ export default function Profile({ author, social, features, researchInterests }:
 
     const [hasLiked, setHasLiked] = useState(false);
     const [showThanks, setShowThanks] = useState(false);
+    const [likeCount, setLikeCount] = useState<number | null>(null);
     const [showAddress, setShowAddress] = useState(false);
     const [isAddressPinned, setIsAddressPinned] = useState(false);
     const [showEmail, setShowEmail] = useState(false);
     const [isEmailPinned, setIsEmailPinned] = useState(false);
     const [lastClickedTooltip, setLastClickedTooltip] = useState<'email' | 'address' | null>(null);
 
-    // Check local storage for user's like status
+    // Check local storage for user's like status, fetch global count from API
     useEffect(() => {
         if (!features.enable_likes) return;
 
@@ -53,21 +55,37 @@ export default function Profile({ author, social, features, researchInterests }:
         if (userHasLiked === 'true') {
             setHasLiked(true);
         }
+
+        getLikeCount().then(setLikeCount).catch(() => setLikeCount(23));
     }, [features.enable_likes]);
 
-    const handleLike = () => {
+    const handleLike = useCallback(async () => {
         const newLikedState = !hasLiked;
         setHasLiked(newLikedState);
 
         if (newLikedState) {
             localStorage.setItem('jiale-website-user-liked', 'true');
+            setLikeCount(prev => (prev ?? 0) + 1);
+            try {
+                const newCount = await incrementLike();
+                setLikeCount(newCount);
+            } catch {
+                setLikeCount(prev => Math.max((prev ?? 1) - 1, 0));
+            }
             setShowThanks(true);
             setTimeout(() => setShowThanks(false), 2000);
         } else {
             localStorage.removeItem('jiale-website-user-liked');
+            setLikeCount(prev => Math.max((prev ?? 1) - 1, 0));
+            try {
+                const newCount = await decrementLike();
+                setLikeCount(newCount);
+            } catch {
+                setLikeCount(prev => (prev ?? 0) + 1);
+            }
             setShowThanks(false);
         }
-    };
+    }, [hasLiked]);
 
     const socialLinks = [
         ...(social.email ? [{
@@ -312,6 +330,34 @@ export default function Profile({ author, social, features, researchInterests }:
                             <div key={index}>{interest}</div>
                         ))}
                     </div>
+                </div>
+            )}
+
+            {/* Like Counter */}
+            {features.enable_likes && (
+                <div className="flex justify-center mb-3">
+                    <motion.div
+                        layout
+                        className="bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200/50 dark:border-neutral-700/50 rounded-lg px-4 py-2"
+                    >
+                        <div className="flex items-center justify-center space-x-1.5">
+                            {likeCount === null ? (
+                                <span className="inline-block w-5 h-4 bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse" />
+                            ) : (
+                                <motion.span
+                                    key={likeCount}
+                                    initial={{ scale: 1.3 }}
+                                    animate={{ scale: 1 }}
+                                    className="text-sm font-medium text-neutral-600 dark:text-neutral-400"
+                                >
+                                    {likeCount}
+                                </motion.span>
+                            )}
+                            <span className="text-sm text-neutral-500 dark:text-neutral-500">
+                                {messages.profile.likes}
+                            </span>
+                        </div>
+                    </motion.div>
                 </div>
             )}
 

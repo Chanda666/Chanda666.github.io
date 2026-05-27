@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { parse } from 'smol-toml';
 import type { I18nConfig } from '@/types/i18n';
+import { execSync } from 'child_process';
 
 export interface SiteConfig {
   site: {
@@ -107,16 +108,39 @@ export function getConfig(locale?: string): SiteConfig {
     const baseConfig = getDefaultConfig();
 
     if (!locale) {
+      autoSetLastUpdated(baseConfig);
       return baseConfig;
     }
 
     const normalizedLocale = normalizeLocale(locale);
     const localizedPath = path.join(process.cwd(), `${DEFAULT_CONTENT_DIR}_${normalizedLocale}`, 'config.toml');
     const localizedConfig = readConfigFromPath(localizedPath);
-
-    return mergeConfig(baseConfig, localizedConfig);
+    const merged = mergeConfig(baseConfig, localizedConfig);
+    autoSetLastUpdated(merged);
+    return merged;
   } catch (error) {
     console.error('Error loading config:', error);
     throw new Error('Failed to load configuration');
+  }
+}
+
+function getLastGitCommitDate(): string | null {
+  try {
+    const date = execSync("git log -1 --format=%cd --date=format:'%B %d, %Y'", {
+      encoding: 'utf-8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    return date || null;
+  } catch {
+    return null;
+  }
+}
+
+function autoSetLastUpdated(config: SiteConfig): void {
+  if (!config.site.last_updated) {
+    const gitDate = getLastGitCommitDate();
+    if (gitDate) {
+      config.site.last_updated = gitDate;
+    }
   }
 }
