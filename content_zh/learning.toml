@@ -1,4 +1,16 @@
-type = "articles"
+type = "thoughts"
 title = "学习"
-description = "最近读的论文、课程笔记、PDF 和学习材料。"
-source = "learning"
+description = "课程笔记和学习资料，按主题整理。"
+
+[[modules]]
+id = "computer-networking"
+title = "计算机网络"
+subtitle = "记录计算机网络中的 TCP/IP、HTTP、DNS、路由协议等核心知识。"
+keywords = ["TCP/IP", "HTTP", "DNS", "Routing", "OSI"]
+source = "learning/computer-networking.md"
+links = [
+  { title = "OSI 七层模型" },
+  { title = "TCP 与 UDP" },
+  { title = "HTTP 协议详解" },
+  { title = "DNS 解析过程" },
+]

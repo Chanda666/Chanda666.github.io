@@ -1,4 +1,16 @@
-type = "articles"
-title = "想法"
-description = "带链接、图片、文字和表情的日记式条目。"
-source = "thoughts"
+type = "thoughts"
+title = "笔记"
+description = "按主题整理的知识笔记。点击任意模块查看完整内容。"
+
+[[modules]]
+id = "computer-organization"
+title = "组成原理"
+subtitle = "记录 CPU、Cache、流水线、存储系统、指令执行流程等计算机组成原理知识。"
+keywords = ["CPU", "Cache", "Pipeline", "RISC-V", "Memory"]
+source = "thoughts/computer-organization.md"
+links = [
+  { title = "Cache 与存储层次" },
+  { title = "流水线 CPU" },
+  { title = "指令执行流程" },
+  { title = "中断与异常" },
+]
