@@ -14,7 +14,7 @@ import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 import { Github, Linkedin, Pin } from 'lucide-react';
 import type { SiteConfig } from '@/lib/config';
 import { useMessages } from '@/lib/i18n/useMessages';
-import { getLikeCount, incrementLike, decrementLike } from '@/lib/counter';
+import { getLikeCount, incrementLike } from '@/lib/counter';
 
 // Custom ORCID icon component
 const OrcidIcon = ({ className }: { className?: string }) => (
@@ -60,31 +60,19 @@ export default function Profile({ author, social, features, researchInterests }:
     }, [features.enable_likes]);
 
     const handleLike = useCallback(async () => {
-        const newLikedState = !hasLiked;
-        setHasLiked(newLikedState);
+        if (hasLiked) return;
 
-        if (newLikedState) {
-            localStorage.setItem('jiale-website-user-liked', 'true');
-            setLikeCount(prev => (prev ?? 0) + 1);
-            try {
-                const newCount = await incrementLike();
-                setLikeCount(newCount);
-            } catch {
-                setLikeCount(prev => Math.max((prev ?? 1) - 1, 0));
-            }
-            setShowThanks(true);
-            setTimeout(() => setShowThanks(false), 2000);
-        } else {
-            localStorage.removeItem('jiale-website-user-liked');
+        setHasLiked(true);
+        localStorage.setItem('jiale-website-user-liked', 'true');
+        setLikeCount(prev => (prev ?? 0) + 1);
+        try {
+            const newCount = await incrementLike();
+            setLikeCount(newCount);
+        } catch {
             setLikeCount(prev => Math.max((prev ?? 1) - 1, 0));
-            try {
-                const newCount = await decrementLike();
-                setLikeCount(newCount);
-            } catch {
-                setLikeCount(prev => (prev ?? 0) + 1);
-            }
-            setShowThanks(false);
         }
+        setShowThanks(true);
+        setTimeout(() => setShowThanks(false), 2000);
     }, [hasLiked]);
 
     const socialLinks = [
