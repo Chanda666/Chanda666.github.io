@@ -51,3 +51,7 @@ git push
 ```
 
 每次推送到 `main` 后，GitHub Actions 会自动部署到 GitHub Pages。
+
+## 当前模块维护方式
+
+`Learning` 和 `Thoughts` 现在使用模块注册方式维护。新增笔记前请看 `SITE_MAINTENANCE.md`。

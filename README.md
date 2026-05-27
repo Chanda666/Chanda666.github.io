@@ -51,3 +51,7 @@ git push
 ```
 
 GitHub Actions deploys the site to GitHub Pages automatically after each push to `main`.
+
+## Current Module Workflow
+
+`Learning` and `Thoughts` now use module registration. See `SITE_MAINTENANCE.md` before adding new notes.
