@@ -10,6 +10,7 @@ export interface ThoughtModule {
   keywords?: string[];
   links?: ThoughtModuleLink[];
   source: string;
+  topic?: string;
 }
 
 export interface ThoughtsPageConfig {

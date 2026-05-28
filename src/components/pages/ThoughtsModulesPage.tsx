@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import {
@@ -8,13 +9,54 @@ import {
   TagIcon,
 } from '@heroicons/react/24/outline';
 import type { ThoughtsPageConfig } from '@/types/thought';
+import {
+  getDefaultTopic,
+  getTopicsForKind,
+  type TopicOption,
+} from '@/lib/topics';
+import TopicDropdown from './TopicDropdown';
 
 interface ThoughtsModulesPageProps {
   config: ThoughtsPageConfig;
   baseHref?: string;
+  moduleKind: 'learning' | 'thoughts';
+  locale: string;
 }
 
-export default function ThoughtsModulesPage({ config, baseHref = '/thoughts' }: ThoughtsModulesPageProps) {
+function getUiText(locale: string) {
+  return locale === 'zh'
+    ? {
+      topic: '主题',
+      contents: '内容',
+      readMore: 'Read more',
+      empty: '暂无内容',
+    }
+    : {
+      topic: 'Topic',
+      contents: 'Contents',
+      readMore: 'Read more',
+      empty: 'No content yet',
+    };
+}
+
+function resolveInitialTopic(options: TopicOption[], moduleKind: 'learning' | 'thoughts') {
+  const preferred = getDefaultTopic(moduleKind);
+  return options.some((option) => option.key === preferred) ? preferred : options[0]?.key;
+}
+
+export default function ThoughtsModulesPage({
+  config,
+  baseHref = '/thoughts',
+  moduleKind,
+  locale,
+}: ThoughtsModulesPageProps) {
+  const options = useMemo(() => getTopicsForKind(moduleKind), [moduleKind]);
+  const [currentTopic, setCurrentTopic] = useState(() => resolveInitialTopic(options, moduleKind));
+  const ui = getUiText(locale);
+  const filteredModules = useMemo(() => {
+    return config.modules.filter((mod) => mod.topic === currentTopic);
+  }, [config.modules, currentTopic]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -22,17 +64,29 @@ export default function ThoughtsModulesPage({ config, baseHref = '/thoughts' }: 
       transition={{ duration: 0.6 }}
       className="max-w-3xl mx-auto"
     >
-      <div className="mb-10">
-        <h1 className="text-4xl font-serif font-bold text-primary mb-4">{config.title}</h1>
-        {config.description && (
-          <p className="text-lg text-neutral-600 dark:text-neutral-500 max-w-2xl leading-relaxed">
-            {config.description}
-          </p>
-        )}
+      <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-4xl font-serif font-bold text-primary mb-4">{config.title}</h1>
+          {config.description && (
+            <p className="text-lg text-neutral-600 dark:text-neutral-500 max-w-2xl leading-relaxed">
+              {config.description}
+            </p>
+          )}
+        </div>
+
+        <div className="shrink-0 sm:pt-8">
+          <TopicDropdown
+            options={options}
+            currentTopic={currentTopic || options[0]?.key || ''}
+            onChange={setCurrentTopic}
+            locale={locale}
+            label={ui.topic}
+          />
+        </div>
       </div>
 
       <div className="space-y-6">
-        {config.modules.map((mod, index) => (
+        {filteredModules.map((mod, index) => (
           <motion.article
             key={mod.id}
             initial={{ opacity: 0, y: 20 }}
@@ -60,7 +114,7 @@ export default function ThoughtsModulesPage({ config, baseHref = '/thoughts' }: 
                     {mod.links && mod.links.length > 0 && (
                       <div className="mb-4">
                         <p className="text-xs font-medium text-neutral-400 uppercase tracking-wider mb-2">
-                          Contents
+                          {ui.contents}
                         </p>
                         <div className="space-y-1.5">
                           {mod.links.map((link) => (
@@ -93,7 +147,7 @@ export default function ThoughtsModulesPage({ config, baseHref = '/thoughts' }: 
 
                   <div className="shrink-0 flex items-center">
                     <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent whitespace-nowrap">
-                      <span>Read more</span>
+                      <span>{ui.readMore}</span>
                       <ArrowRightIcon className="h-4 w-4" />
                     </span>
                   </div>
@@ -103,9 +157,9 @@ export default function ThoughtsModulesPage({ config, baseHref = '/thoughts' }: 
           </motion.article>
         ))}
 
-        {config.modules.length === 0 && (
+        {filteredModules.length === 0 && (
           <div className="text-neutral-600 dark:text-neutral-500 border border-dashed border-neutral-300 dark:border-neutral-700 rounded-xl p-6 text-center">
-            No modules yet.
+            {ui.empty}
           </div>
         )}
       </div>

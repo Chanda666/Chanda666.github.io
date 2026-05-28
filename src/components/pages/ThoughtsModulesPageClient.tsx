@@ -8,12 +8,14 @@ interface ThoughtsModulesPageClientProps {
   configsByLocale: Record<string, ThoughtsPageConfig>;
   defaultLocale: string;
   baseHref?: string;
+  moduleKind: 'learning' | 'thoughts';
 }
 
 export default function ThoughtsModulesPageClient({
   configsByLocale,
   defaultLocale,
   baseHref,
+  moduleKind,
 }: ThoughtsModulesPageClientProps) {
   const locale = useLocaleStore((state) => state.locale);
   const fallback = configsByLocale[defaultLocale] || Object.values(configsByLocale)[0];
@@ -23,7 +25,7 @@ export default function ThoughtsModulesPageClient({
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <ThoughtsModulesPage config={config} baseHref={baseHref} />
+      <ThoughtsModulesPage config={config} baseHref={baseHref} moduleKind={moduleKind} locale={locale || defaultLocale} />
     </div>
   );
 }

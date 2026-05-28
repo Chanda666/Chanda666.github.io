@@ -1,4 +1,4 @@
-import { getTomlContent } from '@/lib/content';
+import { getModulesPageConfig } from '@/lib/content';
 import { getConfig } from '@/lib/config';
 import { getRuntimeI18nConfig } from '@/lib/i18n/config';
 import type { ThoughtsPageConfig } from '@/types/thought';
@@ -25,16 +25,16 @@ export default function LearningPage() {
   const configsByLocale: Record<string, ThoughtsPageConfig> = {};
 
   for (const locale of targetLocales) {
-    const cfg = getTomlContent<ThoughtsPageConfig>('learning.toml', locale);
+    const cfg = getModulesPageConfig('learning.toml', 'learning', locale);
     if (cfg) {
       configsByLocale[locale] = cfg;
     }
   }
 
-  const defaultCfg = getTomlContent<ThoughtsPageConfig>('learning.toml');
+  const defaultCfg = getModulesPageConfig('learning.toml', 'learning');
   if (defaultCfg) {
     configsByLocale[runtimeI18n.defaultLocale] = configsByLocale[runtimeI18n.defaultLocale] || defaultCfg;
   }
 
-  return <ThoughtsModulesPageClient configsByLocale={configsByLocale} defaultLocale={runtimeI18n.defaultLocale} baseHref="/learning" />;
+  return <ThoughtsModulesPageClient configsByLocale={configsByLocale} defaultLocale={runtimeI18n.defaultLocale} baseHref="/learning" moduleKind="learning" />;
 }

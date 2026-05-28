@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
-import { getTomlContent, getMarkdownContent } from '@/lib/content';
+import { getModulesPageConfig, getMarkdownContent } from '@/lib/content';
 import { getConfig } from '@/lib/config';
 import { getRuntimeI18nConfig } from '@/lib/i18n/config';
-import type { ThoughtsPageConfig, ThoughtModule } from '@/types/thought';
+import type { ThoughtModule } from '@/types/thought';
 import ThoughtsModuleDetailPageClient from '@/components/pages/ThoughtsModuleDetailPageClient';
 import type { Metadata } from 'next';
 
@@ -12,7 +12,7 @@ interface ModulePageData {
 }
 
 function loadModuleData(slug: string, locale?: string): ModulePageData | null {
-  const cfg = getTomlContent<ThoughtsPageConfig>('learning.toml', locale);
+  const cfg = getModulesPageConfig('learning.toml', 'learning', locale);
   if (!cfg) return null;
 
   const mod = cfg.modules.find((m) => m.id === slug);
@@ -23,7 +23,7 @@ function loadModuleData(slug: string, locale?: string): ModulePageData | null {
 }
 
 export function generateStaticParams() {
-  const cfg = getTomlContent<ThoughtsPageConfig>('learning.toml');
+  const cfg = getModulesPageConfig('learning.toml', 'learning');
   if (!cfg) return [];
   return cfg.modules.map((mod) => ({ module: mod.id }));
 }

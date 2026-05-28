@@ -13,26 +13,24 @@ npm run dev
 
 - `content/config.toml`：站点资料和导航
 - `content/bio.md`：主页简介
-- `content/learning/*.md`：学习文章
-- `content/thoughts/*.md`：日记式想法文章
+- `content/learning/<topic>/*.md`：按主题分类的学习模块
+- `content/thoughts/<topic>/*.md`：按主题分类的想法模块
 - `content_zh/`：中文版本
 - `public/files/`：PDF 和可下载文件
 - `public/images/`：图片
 
 ## 新增 Learning 或 Thoughts 文章
 
-在 `content/learning/` 或 `content/thoughts/` 下面新建 `.md` 文件。
+在对应主题文件夹中新建 `.md` 文件，例如 `content/learning/computer/` 或 `content/thoughts/random/`。
 
 示例：
 
 ```md
 ---
+id = "my-paper-note"
 title = "我的论文笔记"
-date = "2026-05-25"
-summary = "一句话摘要。"
-tags = ["论文", "阅读"]
-link = "https://example.com"
-image = "/images/example.jpg"
+subtitle = "一句话摘要。"
+keywords = ["论文", "阅读"]
 ---
 
 这里用 Markdown 写正文。
@@ -40,7 +38,7 @@ image = "/images/example.jpg"
 [PDF 笔记](/files/course-notes.pdf)
 ```
 
-只有 `title` 必填。`date`、`summary`、`tags`、`link`、`image` 都是可选项。
+frontmatter 是可选的。不写时，文件名会作为卡片标题和 URL 标识。
 
 修改后发布：
 
@@ -54,4 +52,4 @@ git push
 
 ## 当前模块维护方式
 
-`Learning` 和 `Thoughts` 现在使用模块注册方式维护。新增笔记前请看 `SITE_MAINTENANCE.md`。
+`Learning` 和 `Thoughts` 现在使用主题文件夹维护，TOML 注册只是可选元数据。新增笔记前请看 `SITE_MAINTENANCE.md`。

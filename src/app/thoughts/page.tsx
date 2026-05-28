@@ -1,4 +1,4 @@
-import { getTomlContent } from '@/lib/content';
+import { getModulesPageConfig } from '@/lib/content';
 import { getConfig } from '@/lib/config';
 import { getRuntimeI18nConfig } from '@/lib/i18n/config';
 import type { ThoughtsPageConfig } from '@/types/thought';
@@ -25,16 +25,16 @@ export default function ThoughtsPage() {
   const configsByLocale: Record<string, ThoughtsPageConfig> = {};
 
   for (const locale of targetLocales) {
-    const cfg = getTomlContent<ThoughtsPageConfig>('thoughts.toml', locale);
+    const cfg = getModulesPageConfig('thoughts.toml', 'thoughts', locale);
     if (cfg) {
       configsByLocale[locale] = cfg;
     }
   }
 
-  const defaultCfg = getTomlContent<ThoughtsPageConfig>('thoughts.toml');
+  const defaultCfg = getModulesPageConfig('thoughts.toml', 'thoughts');
   if (defaultCfg) {
     configsByLocale[runtimeI18n.defaultLocale] = configsByLocale[runtimeI18n.defaultLocale] || defaultCfg;
   }
 
-  return <ThoughtsModulesPageClient configsByLocale={configsByLocale} defaultLocale={runtimeI18n.defaultLocale} />;
+  return <ThoughtsModulesPageClient configsByLocale={configsByLocale} defaultLocale={runtimeI18n.defaultLocale} moduleKind="thoughts" />;
 }
