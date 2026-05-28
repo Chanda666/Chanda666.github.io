@@ -1,16 +1,3 @@
 type = "thoughts"
-title = "笔记"
-description = "按主题整理的知识笔记。点击任意模块查看完整内容。"
-
-[[modules]]
-id = "computer-organization"
-title = "组成原理"
-subtitle = "记录 CPU、Cache、流水线、存储系统、指令执行流程等计算机组成原理知识。"
-keywords = ["CPU", "Cache", "Pipeline", "RISC-V", "Memory"]
-source = "thoughts/random/computer-organization.md"
-links = [
-  { title = "Cache 与存储层次" },
-  { title = "流水线 CPU" },
-  { title = "指令执行流程" },
-  { title = "中断与异常" },
-]
+title = "想法"
+description = "按主题整理的日常思考和内容分析。点击右侧主题分类模块查看不同主题下的完整内容。"
